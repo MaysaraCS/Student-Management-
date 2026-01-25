@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -9,4 +9,5 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'student-management-angular';
+  message = 'Welcome to my student-management';
 }

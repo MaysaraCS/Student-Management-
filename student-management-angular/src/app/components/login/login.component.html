@@ -1,0 +1,14 @@
+<p>login works!</p>
+<div class="container">
+  <div class="alert alert-warning" *ngIf="invalidLogin">{{ errorMessage }}</div>
+
+  <div>
+    Email :
+    <input type="email" name="email" [(ngModel)]="email" /> Password :
+    <input type="password" name="password" [(ngModel)]="password" />
+
+    Test Email : {{ email }}
+
+    <button (click)="handleLogin()" class="btn btn-success">Login</button>
+  </div>
+</div>
