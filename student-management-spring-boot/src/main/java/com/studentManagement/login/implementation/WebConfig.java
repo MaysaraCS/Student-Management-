@@ -1,4 +1,4 @@
-package com.studentManagement.login.config;
+package com.studentManagement.login.implementation;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

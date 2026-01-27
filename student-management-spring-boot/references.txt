@@ -1,0 +1,5 @@
+https://medium.com/@victoronu/implementing-role-and-permission-based-authorization-in-spring-boot-with-jwt-359901206b6a
+https://github.com/victor-onu/authorization-roles-and-permissions
+https://github.com/Abhinav0915/RoleBasedAuthentication/blob/main/src/main/java/com/example/RoleBasedAuth/filter/JwtAuthenticationFilter.java
+https://www.geeksforgeeks.org/advance-java/spring-security-role-based-authentication/
+https://github.com/MaysaraCS/Spring-Boot--Angular-TODO-/tree/master/learn-oauth

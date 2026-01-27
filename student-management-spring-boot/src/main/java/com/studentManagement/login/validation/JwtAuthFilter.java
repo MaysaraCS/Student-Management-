@@ -1,7 +1,9 @@
-package com.studentManagement.login.config;
+package com.studentManagement.login.validation;
 
 import java.io.IOException;
 
+import com.studentManagement.login.config.JWTService;
+import com.studentManagement.login.configuration.UserInfoUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

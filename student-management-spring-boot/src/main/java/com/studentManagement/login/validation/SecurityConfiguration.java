@@ -1,5 +1,6 @@
-package com.studentManagement.login.config;
+package com.studentManagement.login.validation;
 
+import com.studentManagement.login.configuration.UserInfoUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -56,8 +57,21 @@ public class SecurityConfiguration {
                 .cors(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/doLogin", "/api/doRegister").permitAll()
-                        .requestMatchers("/api/dashboard").hasAuthority("USER")
+                        // Public endpoints
+                        .requestMatchers(
+                                "/api/auth/admin/login",
+                                "/api/auth/lecturer/login",
+                                "/api/auth/lecturer/usernames",
+                                "/api/auth/student/register",
+                                "/api/auth/student/login"
+                        ).permitAll()
+
+                        // Role-based endpoints
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/lecturer/**").hasRole("LECTURER")
+                        .requestMatchers("/api/student/**").hasRole("STUDENT")
+
+                        // All other requests require authentication
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
