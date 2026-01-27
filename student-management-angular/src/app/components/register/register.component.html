@@ -1,0 +1,115 @@
+<div class="signup-card">
+
+  <h1 *ngIf="msg">{{ msg }}</h1>
+
+  <div class="card-title">
+    <h1>Create Account</h1>
+    <span>
+      Already have an account?
+      <a routerLink="/login">Sign In</a>
+    </span>
+  </div>
+
+  <form #signupForm="ngForm" (ngSubmit)="onSubmit()">
+
+    <!-- Name -->
+    <input
+      type="text"
+      name="name"
+      placeholder="Name"
+      [(ngModel)]="request.name"
+      required
+      #name="ngModel"
+    />
+
+    <div class="text-danger" *ngIf="name.touched && name.invalid">
+      This is required
+    </div>
+
+    <!-- Username -->
+    <input
+      type="text"
+      name="username"
+      placeholder="Username"
+      [(ngModel)]="request.username"
+      required
+      #username="ngModel"
+    />
+
+    <div class="text-danger" *ngIf="username.touched && username.invalid">
+      This is required
+    </div>
+
+    <!-- Password -->
+    <input
+      type="password"
+      name="password"
+      placeholder="Password"
+      [(ngModel)]="request.password"
+      required
+      #password="ngModel"
+    />
+
+    <div class="text-danger" *ngIf="password.touched && password.invalid">
+      This is required
+    </div>
+
+    <!-- Student ID -->
+    <input
+      type="text"
+      name="studentID"
+      placeholder="Student ID"
+      [(ngModel)]="request.studentID"
+      required
+      #studentID="ngModel"
+    />
+
+    <div class="text-danger" *ngIf="studentID.touched && studentID.invalid">
+      This is required
+    </div>
+
+    <!-- Mobile -->
+    <input
+      type="text"
+      name="mobileno"
+      placeholder="Mobile No"
+      [(ngModel)]="request.mobileno"
+      required
+      #mobileno="ngModel"
+    />
+
+    <div class="text-danger" *ngIf="mobileno.touched && mobileno.invalid">
+      This is required
+    </div>
+
+    <!-- Faculty -->
+    <input
+      type="text"
+      name="faculty"
+      placeholder="Faculty"
+      [(ngModel)]="request.faculty"
+      required
+      #faculty="ngModel"
+    />
+
+    <div class="text-danger" *ngIf="faculty.touched && faculty.invalid">
+      This is required
+    </div>
+
+    <input
+      type="submit"
+      value="Signup"
+      [disabled]="signupForm.invalid"
+    />
+
+  </form>
+
+  <div class="card-terms">
+    <input type="checkbox" required />
+    <span>
+      I have read and agree to the
+      <a href="">Terms of Service</a>
+    </span>
+  </div>
+
+</div>

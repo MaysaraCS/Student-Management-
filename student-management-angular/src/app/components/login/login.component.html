@@ -1,14 +1,49 @@
-<p>login works!</p>
-<div class="container">
-  <div class="alert alert-warning" *ngIf="invalidLogin">{{ errorMessage }}</div>
-
-  <div>
-    Email :
-    <input type="email" name="email" [(ngModel)]="email" /> Password :
-    <input type="password" name="password" [(ngModel)]="password" />
-
-    Test Email : {{ email }}
-
-    <button (click)="handleLogin()" class="btn btn-success">Login</button>
+<div class="signup-card">
+  <div class="card-title">
+    <h1>Login</h1>
+    <span>
+      Don't have an account?
+      <a routerLink="/register">Create Account</a>
+    </span>
   </div>
+
+  <form [formGroup]="userForm" (ngSubmit)="handleLogin()">
+    <!-- Username -->
+    <input type="text" formControlName="username" placeholder="Username" />
+
+    <div
+      class="text-danger"
+      *ngIf="
+        userForm.controls['username'].touched &&
+        userForm.controls['username'].invalid
+      "
+    >
+      Username is required
+    </div>
+
+    <!-- Password -->
+    <input type="password" formControlName="password" placeholder="Password" />
+
+    <div
+      class="text-danger"
+      *ngIf="
+        userForm.controls['password'].touched &&
+        userForm.controls['password'].errors?.['required']
+      "
+    >
+      Password is required
+    </div>
+
+    <div
+      class="text-danger"
+      *ngIf="
+        userForm.controls['password'].touched &&
+        userForm.controls['password'].errors?.['minlength']
+      "
+    >
+      Password must be at least 4 characters
+    </div>
+
+    <input type="submit" value="Login" [disabled]="userForm.invalid" />
+  </form>
 </div>

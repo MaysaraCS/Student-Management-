@@ -1,39 +1,52 @@
 import { NgIf } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { HardcodedAuthenticationService } from '../../service/hardcoded-authentication.service';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../service/auth.service';
+import { LoginRequest } from '../../models/login-request';
+import { AuthStorageService } from '../../service/storage/auth-storage.service';
 
 @Component({
   selector: 'app-login',
-  imports: [ FormsModule, NgIf],
+  imports: [ FormsModule, NgIf, RouterLink,ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit{
 
-  email = 'maysaracs1001@gamil.com'
-  password = ''
-  errorMessage = 'Invalid Credentials'
-  invalidLogin = false
+  userForm : FormGroup =  new FormGroup({
+    username: new FormControl('', Validators.required),
+    password: new FormControl('', [Validators.required, Validators.minLength(4)])
+  });
 
-  constructor(private router : Router,
-    private hardcodedAuthenticationService:HardcodedAuthenticationService
-  ){}
+  router = inject(Router);
+  request : LoginRequest = new LoginRequest;
+
+  constructor(private authService:AuthService, private storage: AuthStorageService){}
 
   ngOnInit(): void {
       
   }
   handleLogin(){
-    console.log(this.email);
-    if(this.hardcodedAuthenticationService.authenticate(this.email, this.password)) {
-      // Set flag to indicate just logged in
-      sessionStorage.setItem('justLoggedIn', 'true');
-      //Redirect to Welcome Page
-      this.router.navigate(['student-dashboard', this.email])
-      this.invalidLogin = false
-    }else{
-      this.invalidLogin = true
+    this.storage.logoutStorage();
+    const formValue = this.userForm.value;
+    
+    if(formValue.username == '' || formValue.password == ''){
+      alert('Worng Credentilas');
+      return;
     }
+    this.request.username = formValue.username;
+    this.request.password = formValue.password;
+
+    this.authService.login(this.request).subscribe({
+      next:(res) =>{
+        this.storage.loginStorage(res.token);
+
+        this.router.navigate(['/student-dashboard']);
+      },
+      error:(err) => {
+        console.log("Eroor Recived",err);
+      }
+    })
   }
 }

@@ -10,16 +10,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class StudentDashboardComponent implements OnInit{
 
   message = 'Some Welcome Message'
-  email = ''
+  username = ''
   constructor( private route: ActivatedRoute, private router:Router){}
 
   ngOnInit(): void {
-      this.email = this.route.snapshot.params['email'];
+      this.username = this.route.snapshot.params['username'];
       // Only auto-navigate to student-dashboard if just logged in
     if (sessionStorage.getItem('justLoggedIn') === 'true') {
       sessionStorage.removeItem('justLoggedIn');
       setTimeout(() => {
-        this.router.navigate(['student-dashboard',this.email]);
+        this.router.navigate(['student-dashboard',this.username]);
       }, 1000); // 1 second delay
     }
   }
