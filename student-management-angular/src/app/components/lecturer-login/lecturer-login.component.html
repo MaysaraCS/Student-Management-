@@ -1,0 +1,83 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="card-title">
+      <h1>Lecturer Login</h1>
+      <span>Select your username from the list below</span>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="alert alert-error">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoadingUsernames" class="loading-container">
+      <div class="spinner"></div>
+      <p>Loading lecturer usernames...</p>
+    </div>
+
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="handleLogin()"
+      *ngIf="!isLoadingUsernames"
+    >
+      <!-- Username Dropdown -->
+      <div class="form-group">
+        <label for="username">Select Lecturer Username</label>
+        <select id="username" formControlName="username" class="form-select">
+          <option value="" disabled selected>Choose username...</option>
+          <option *ngFor="let username of lecturerUsernames" [value]="username">
+            {{ username }}
+          </option>
+        </select>
+        <div
+          class="text-danger"
+          *ngIf="
+            loginForm.controls['username'].touched &&
+            loginForm.controls['username'].invalid
+          "
+        >
+          Please select a username
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Enter password"
+          class="form-input"
+        />
+        <div
+          class="text-danger"
+          *ngIf="
+            loginForm.controls['password'].touched &&
+            loginForm.controls['password'].errors?.['required']
+          "
+        >
+          Password is required
+        </div>
+        <div
+          class="text-danger"
+          *ngIf="
+            loginForm.controls['password'].touched &&
+            loginForm.controls['password'].errors?.['minlength']
+          "
+        >
+          Password must be at least 4 characters
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit" [disabled]="loginForm.invalid">
+        Login as Lecturer
+      </button>
+    </form>
+
+    <div class="card-footer">
+      <span class="link" (click)="navigateToLanding()">← Back to Home</span>
+    </div>
+  </div>
+</div>

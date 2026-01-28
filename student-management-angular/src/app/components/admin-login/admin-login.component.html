@@ -1,0 +1,74 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="card-title">
+      <h1>Admin Login</h1>
+      <span>Administrator Access Only</span>
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="alert alert-error">
+      {{ errorMessage }}
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="handleLogin()">
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Admin Email</label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          placeholder="Enter admin email"
+          class="form-input"
+        />
+        <div
+          class="text-danger"
+          *ngIf="
+            loginForm.controls['email'].touched &&
+            loginForm.controls['email'].errors?.['required']
+          "
+        >
+          Email is required
+        </div>
+        <div
+          class="text-danger"
+          *ngIf="
+            loginForm.controls['email'].touched &&
+            loginForm.controls['email'].errors?.['email']
+          "
+        >
+          Please enter a valid email
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          placeholder="Enter password"
+          class="form-input"
+        />
+        <div
+          class="text-danger"
+          *ngIf="
+            loginForm.controls['password'].touched &&
+            loginForm.controls['password'].invalid
+          "
+        >
+          Password is required
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit" [disabled]="loginForm.invalid">
+        Login as Admin
+      </button>
+    </form>
+
+    <div class="card-footer">
+      <span class="link" (click)="navigateToLanding()">← Back to Home</span>
+    </div>
+  </div>
+</div>

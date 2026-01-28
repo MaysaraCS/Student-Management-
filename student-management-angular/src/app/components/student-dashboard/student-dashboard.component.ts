@@ -1,26 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthStorageService } from '../../service/storage/auth-storage.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-student-dashboard',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './student-dashboard.component.html',
   styleUrl: './student-dashboard.component.css'
 })
-export class StudentDashboardComponent implements OnInit{
+export class StudentDashboardComponent implements OnInit {
 
-  message = 'Some Welcome Message'
-  username = ''
-  constructor( private route: ActivatedRoute, private router:Router){}
+  username: string = '';
+  
+  constructor(
+    private route: ActivatedRoute, 
+    private router: Router,
+    private storage: AuthStorageService
+  ) {}
 
   ngOnInit(): void {
-      this.username = this.route.snapshot.params['username'];
-      // Only auto-navigate to student-dashboard if just logged in
-    if (sessionStorage.getItem('justLoggedIn') === 'true') {
-      sessionStorage.removeItem('justLoggedIn');
-      setTimeout(() => {
-        this.router.navigate(['student-dashboard',this.username]);
-      }, 1000); // 1 second delay
-    }
+    this.username = this.route.snapshot.params['username'];
+    console.log('Student Dashboard loaded for:', this.username);
+  }
+
+  logout(): void {
+    this.storage.logoutStorage();
+    this.router.navigate(['/landing']);
   }
 }

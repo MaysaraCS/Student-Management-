@@ -1,0 +1,71 @@
+<div class="landing-container">
+  <div class="landing-card">
+    <div class="card-header">
+      <h1>Student Management System</h1>
+      <p>Welcome! Please select your role to continue</p>
+    </div>
+
+    <div class="role-options">
+      <!-- Student Option -->
+      <div class="role-card" (click)="navigateToStudentRegister()">
+        <div class="role-icon student-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="48"
+            height="48"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </div>
+        <h3>Student</h3>
+        <p>Register or Login as a Student</p>
+      </div>
+
+      <!-- Lecturer Option -->
+      <div class="role-card" (click)="navigateToLecturerLogin()">
+        <div class="role-icon lecturer-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="48"
+            height="48"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
+        </div>
+        <h3>Lecturer</h3>
+        <p>Login as a Lecturer</p>
+      </div>
+
+      <!-- Admin Option -->
+      <div class="role-card" (click)="navigateToAdminLogin()">
+        <div class="role-icon admin-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="48"
+            height="48"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+            <path d="M2 17l10 5 10-5"></path>
+            <path d="M2 12l10 5 10-5"></path>
+          </svg>
+        </div>
+        <h3>Admin</h3>
+        <p>Login as Administrator</p>
+      </div>
+    </div>
+  </div>
+</div>

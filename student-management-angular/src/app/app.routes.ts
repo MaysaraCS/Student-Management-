@@ -1,50 +1,69 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
 import { StudentDashboardComponent } from './components/student-dashboard/student-dashboard.component';
 import { ErrorComponent } from './components/error/error.component';
 import { RouteGuardService } from './service/guards/route-guard.service';
-import { RegisterComponent } from './components/register/register.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { LecturerDashboardComponent } from './components/lecturer-dashboard/lecturer-dashboard.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { Role } from './models/roles.enum';
+import { LandingComponent } from './components/landing/landing.component';
+import { StudentRegisterComponent } from './components/student-register/student-register.component';
+import { StudentLoginComponent } from './components/student-login/student-login.component';
+import { LecturerLoginComponent } from './components/lecturer-login/lecturer-login.component';
+import { AdminLoginComponent } from './components/admin-login/admin-login.component';
 
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: '/login',
+        redirectTo: '/landing',
         pathMatch: 'full'
     },
     {
-        path:'login',
-        component:LoginComponent
+        path: 'landing',
+        component: LandingComponent
     },
     {
-        path:'register',
-        component:RegisterComponent
+        path: 'student-register',
+        component: StudentRegisterComponent
     },
     {
-        path: '', component: LayoutComponent,
+        path: 'student-login',
+        component: StudentLoginComponent
+    },
+    {
+        path: 'lecturer-login',
+        component: LecturerLoginComponent
+    },
+    {
+        path: 'admin-login',
+        component: AdminLoginComponent
+    },
+    {
+        path: '', 
+        component: LayoutComponent,
         children: [
             { 
                 path: 'student-dashboard/:username', 
                 component: StudentDashboardComponent, 
-                canActivate: [RouteGuardService] 
+                canActivate: [RouteGuardService],
+                data: { roles: [Role.STUDENT] }
             },
             {
                 path: 'lecturer-dashboard/:username', 
                 component: LecturerDashboardComponent, 
-                canActivate: [RouteGuardService]
+                canActivate: [RouteGuardService],
+                data: { roles: [Role.LECTURER] }
             },
             {
                 path: 'admin-dashboard/:username', 
                 component: AdminDashboardComponent, 
-                canActivate: [RouteGuardService]
+                canActivate: [RouteGuardService],
+                data: { roles: [Role.ADMIN] }
             }
         ]
     },
     {
-        path:'**',
-        component:ErrorComponent
-    },
-
+        path: '**',
+        component: ErrorComponent
+    }
 ];

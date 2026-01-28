@@ -1,1 +1,35 @@
-<p>lecturer-dashboard works!</p>
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Lecturer Dashboard</h1>
+    <button class="btn-logout" (click)="logout()">Logout</button>
+  </div>
+
+  <div class="dashboard-content">
+    <div class="welcome-card lecturer-gradient">
+      <h2>Welcome, {{ username }}!</h2>
+      <p>You are logged in as a <strong>Lecturer</strong></p>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <h3> My Classes</h3>
+        <p>Coming soon...</p>
+      </div>
+
+      <div class="info-card">
+        <h3> Assignments</h3>
+        <p>Coming soon...</p>
+      </div>
+
+      <div class="info-card">
+        <h3> Grade Students</h3>
+        <p>Coming soon...</p>
+      </div>
+
+      <div class="info-card">
+        <h3> Schedule</h3>
+        <p>Coming soon...</p>
+      </div>
+    </div>
+  </div>
+</div>

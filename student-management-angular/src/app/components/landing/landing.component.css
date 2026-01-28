@@ -1,0 +1,111 @@
+:host {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.landing-container {
+    width: 100%;
+    max-width: 900px;
+    padding: 20px;
+}
+
+.landing-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    padding: 40px;
+}
+
+.card-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.card-header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.card-header p {
+    font-size: 16px;
+    color: #666;
+}
+
+.role-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+}
+
+.role-card {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 30px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.role-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border-color: #4796ff;
+}
+
+.role-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.student-icon {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.lecturer-icon {
+    background: linear-gradient(135deg, #d96567 0%, #9c2e3c 100%);
+    color: white;
+}
+
+.admin-icon {
+    background: linear-gradient(135deg, #4facfe 0%, #237377 100%);
+    color: white;
+}
+
+.role-card:hover .role-icon {
+    transform: scale(1.1);
+}
+
+.role-card h3 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.role-card p {
+    font-size: 14px;
+    color: #777;
+}
+
+@media (max-width: 768px) {
+    .landing-card {
+        padding: 30px 20px;
+    }
+
+    .role-options {
+        grid-template-columns: 1fr;
+    }
+}

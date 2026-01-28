@@ -1,0 +1,109 @@
+<div class="auth-container">
+  <div class="auth-card">
+    
+    <!-- Success/Error Message -->
+    <div *ngIf="msg" class="alert" [ngClass]="{'alert-success': !isError, 'alert-error': isError}">
+      {{ msg }}
+    </div>
+
+    <div class="card-title">
+      <h1>Create Student Account</h1>
+      <span>
+        Already have an account?
+        <a (click)="navigateToStudentLogin()" class="link">Sign In</a>
+      </span>
+    </div>
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
+      <!-- Name -->
+      <div class="form-group">
+        <input
+          type="text"
+          formControlName="name"
+          placeholder="Full Name"
+          class="form-input"
+        />
+        <div class="text-danger" *ngIf="signupForm.controls['name'].touched && signupForm.controls['name'].invalid">
+          Name is required
+        </div>
+      </div>
+
+      <!-- Username -->
+      <div class="form-group">
+        <input
+          type="text"
+          formControlName="username"
+          placeholder="Username"
+          class="form-input"
+        />
+        <div class="text-danger" *ngIf="signupForm.controls['username'].touched && signupForm.controls['username'].invalid">
+          Username is required
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Password"
+          class="form-input"
+        />
+        <div class="text-danger" *ngIf="signupForm.controls['password'].touched && signupForm.controls['password'].errors?.['required']">
+          Password is required
+        </div>
+        <div class="text-danger" *ngIf="signupForm.controls['password'].touched && signupForm.controls['password'].errors?.['minlength']">
+          Password must be at least 4 characters
+        </div>
+      </div>
+
+      <!-- Student ID -->
+      <div class="form-group">
+        <input
+          type="text"
+          formControlName="studentID"
+          placeholder="Student ID"
+          class="form-input"
+        />
+        <div class="text-danger" *ngIf="signupForm.controls['studentID'].touched && signupForm.controls['studentID'].invalid">
+          Student ID is required
+        </div>
+      </div>
+
+      <!-- Mobile Number -->
+      <div class="form-group">
+        <input
+          type="text"
+          formControlName="mobileno"
+          placeholder="Mobile Number"
+          class="form-input"
+        />
+        <div class="text-danger" *ngIf="signupForm.controls['mobileno'].touched && signupForm.controls['mobileno'].invalid">
+          Mobile number is required
+        </div>
+      </div>
+
+      <!-- Faculty -->
+      <div class="form-group">
+        <input
+          type="text"
+          formControlName="faculty"
+          placeholder="Faculty"
+          class="form-input"
+        />
+        <div class="text-danger" *ngIf="signupForm.controls['faculty'].touched && signupForm.controls['faculty'].invalid">
+          Faculty is required
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit" [disabled]="signupForm.invalid">
+        Register
+      </button>
+    </form>
+
+    <div class="card-footer">
+      <span class="link" (click)="navigateToLanding()">← Back to Home</span>
+    </div>
+  </div>
+</div>

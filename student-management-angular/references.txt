@@ -1,0 +1,4 @@
+https://www.youtube.com/watch?v=AB1XusRBkik
+https://github.com/JavaaTechSolutions/rbac-appilaction/blob/main/forntend/angular-rbac-app/src/app/directives/has-permission.directive.ts
+https://itnext.io/role-based-access-control-in-angular-templates-2eeca497855
+https://youtu.be/i5bwLDWXnG4?si=Pq9rTgutwcQlE7Kw
