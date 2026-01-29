@@ -3,3 +3,8 @@ https://github.com/victor-onu/authorization-roles-and-permissions
 https://github.com/Abhinav0915/RoleBasedAuthentication/blob/main/src/main/java/com/example/RoleBasedAuth/filter/JwtAuthenticationFilter.java
 https://www.geeksforgeeks.org/advance-java/spring-security-role-based-authentication/
 https://github.com/MaysaraCS/Spring-Boot--Angular-TODO-/tree/master/learn-oauth
+
+///////////////////////////////////////////////////////////////////////////////////////////
+https://github.com/MaysaraCS/Spring-Boot--Angular-TODO-/tree/master/web-services
+https://medium.com/@midejoseph24/building-and-deploying-a-java-crud-rest-api-with-spring-boot-hibernate-mysql-docker-docker-5b7d1847345b
+https://github.com/bezkoder/spring-boot-3-rest-api-example

@@ -4,6 +4,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
+/**
+ * User Entity - Base class for all users (Admin, Lecturer, Student)
+ * Uses JOINED inheritance strategy for better normalization
+ */
 @Getter
 @Setter
 @Entity
@@ -29,18 +35,39 @@ public abstract class User {
     @Column(nullable = false)
     private Role role;
 
-    @Column(name = "mobile_no")
+    @Column(name = "mobile_no", length = 20)
     private String mobileNo;
 
-    private String address;
 
     @Column(name = "is_active")
     private Boolean isActive = true;
 
-    // Constructor for role assignment
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    // Default constructor
     public User() {}
 
+    // Constructor with role
     public User(Role role) {
         this.role = role;
+    }
+
+    // Automatically set timestamps
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+        if (isActive == null) {
+            isActive = true;
+        }
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
     }
 }
