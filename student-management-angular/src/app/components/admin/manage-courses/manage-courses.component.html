@@ -1,0 +1,102 @@
+<div class="manage-container">
+  <div class="page-header">
+    <button class="btn-back" (click)="goBack()">← Back to Dashboard</button>
+    <h1>Manage Courses</h1>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-error">
+    {{ errorMessage }}
+  </div>
+
+  <div class="stats-bar">
+    <div class="stat-card">
+      <div class="stat-number">{{ subjects.length }}</div>
+      <div class="stat-label">Total Courses</div>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Loading courses...</p>
+  </div>
+
+  <div class="table-container" *ngIf="!isLoading">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Code</th>
+          <th>Subject Name</th>
+          <th>Lecturers</th>
+          <th>Students Enrolled</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngIf="subjects.length === 0">
+          <td colspan="5" class="no-data">No courses found</td>
+        </tr>
+
+        <!-- 
+          DISPLAY LOGIC:
+          - subjectCode: Unique identifier
+          - subjectName: Full name
+          - lecturerCount: Counted from subject.lecturers.size()
+          - studentCount: Counted from subject.students.size()
+        -->
+        <tr *ngFor="let subject of subjects">
+          <td>
+            <span class="code-badge">{{ subject.subjectCode }}</span>
+          </td>
+          <td>
+            <strong>{{ subject.subjectName }}</strong>
+          </td>
+          <td>
+            <div class="count-display">
+              <span class="count-number">{{ subject.lecturerCount || 0 }}</span>
+              <span class="count-label">lecturer(s)</span>
+            </div>
+          </td>
+          <td>
+            <div class="count-display">
+              <span class="count-number">{{ subject.studentCount || 0 }}</span>
+              <span class="count-label">student(s)</span>
+            </div>
+          </td>
+          <td>
+            <span class="status-badge" [ngClass]="getStatusClass(subject)">
+              {{ getStatusText(subject) }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Info Panel -->
+  <div class="info-panel">
+    <h3>📊 About Course Counts</h3>
+    <p>
+      <strong>Lecturer Count:</strong> Number of lecturers assigned to teach
+      this subject (from lecturer_subjects table)
+    </p>
+    <p>
+      <strong>Student Count:</strong> Number of students enrolled in this
+      subject (from student_subjects table)
+    </p>
+    <p><strong>Status:</strong></p>
+    <ul>
+      <li>
+        <span class="status-badge status-active">Active</span> - Has both
+        lecturers and students
+      </li>
+      <li>
+        <span class="status-badge status-warning">No Students</span> - Has
+        lecturers but no students
+      </li>
+      <li>
+        <span class="status-badge status-inactive">No Lecturers</span> - Not
+        assigned to any lecturer
+      </li>
+    </ul>
+  </div>
+</div>

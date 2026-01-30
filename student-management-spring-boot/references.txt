@@ -8,3 +8,8 @@ https://github.com/MaysaraCS/Spring-Boot--Angular-TODO-/tree/master/learn-oauth
 https://github.com/MaysaraCS/Spring-Boot--Angular-TODO-/tree/master/web-services
 https://medium.com/@midejoseph24/building-and-deploying-a-java-crud-rest-api-with-spring-boot-hibernate-mysql-docker-docker-5b7d1847345b
 https://github.com/bezkoder/spring-boot-3-rest-api-example
+
+////////////////////////////////////////////////////////////////////////////
+https://medium.com/@nima.hashemi/building-a-full-stack-reactive-application-with-spring-boot-and-angular-9bf7228c7186
+https://github.com/oktadev/spring-boot-angular-example/tree/master
+https://p-mehra86.medium.com/how-to-use-an-external-api-with-spring-boot-angular-application-5c181ec94aef

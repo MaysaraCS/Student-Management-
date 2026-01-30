@@ -11,6 +11,9 @@ import { StudentRegisterComponent } from './components/student-register/student-
 import { StudentLoginComponent } from './components/student-login/student-login.component';
 import { LecturerLoginComponent } from './components/lecturer-login/lecturer-login.component';
 import { AdminLoginComponent } from './components/admin-login/admin-login.component';
+import { ManageStudentsComponent } from './components/admin/manage-students/manage-students.component';
+import { ManageLecturersComponent } from './components/admin/manage-lecturers/manage-lecturers.component';
+import { ManageCoursesComponent } from './components/admin/manage-courses/manage-courses.component';
 
 export const routes: Routes = [
     {
@@ -57,6 +60,24 @@ export const routes: Routes = [
             {
                 path: 'admin-dashboard/:username', 
                 component: AdminDashboardComponent, 
+                canActivate: [RouteGuardService],
+                data: { roles: [Role.ADMIN] }
+            },
+            {
+                path: 'admin/manage-students',
+                component: ManageStudentsComponent,
+                canActivate: [RouteGuardService],
+                data: { roles: [Role.ADMIN] }
+            },
+            {
+                path: 'admin/manage-lecturers',
+                component: ManageLecturersComponent,
+                canActivate: [RouteGuardService],
+                data: { roles: [Role.ADMIN] }
+            },
+            {
+                path: 'admin/manage-courses',
+                component: ManageCoursesComponent,
                 canActivate: [RouteGuardService],
                 data: { roles: [Role.ADMIN] }
             }

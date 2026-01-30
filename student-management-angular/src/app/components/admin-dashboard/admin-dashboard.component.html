@@ -1,35 +1,88 @@
+<!-- 
+  ANGULAR CONCEPT: Component Template
+  This HTML template is bound to the AdminDashboardComponent TypeScript class
+  
+  EVENT BINDING: (click)="method()" - Responds to user clicks
+  ROUTER: Uses Angular Router to navigate between pages
+-->
+
 <div class="dashboard-container">
+  <!-- Header with logout -->
   <div class="dashboard-header">
     <h1>Admin Dashboard</h1>
     <button class="btn-logout" (click)="logout()">Logout</button>
   </div>
 
   <div class="dashboard-content">
+    <!-- Welcome Card -->
     <div class="welcome-card admin-gradient">
       <h2>Welcome, Admin!</h2>
-      <p>You are logged in as an <strong>Administrator</strong></p>
+      <p>Manage your Student Management System</p>
     </div>
 
+    <!-- 
+      NAVIGATION GRID
+      Clicking these cards navigates to different management pages
+    -->
     <div class="info-grid">
-      <div class="info-card">
-        <h3> Manage Students</h3>
+      
+      <!-- Manage Students Card -->
+      <div class="info-card clickable" (click)="navigateToManageStudents()">
+        <div class="card-icon student-color">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+        <h3>📚 Manage Students</h3>
+        <p>Create, update, delete students and assign subjects</p>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <!-- Manage Lecturers Card -->
+      <div class="info-card clickable" (click)="navigateToManageLecturers()">
+        <div class="card-icon lecturer-color">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
+        </div>
+        <h3>👨‍🏫 Manage Lecturers</h3>
+        <p>Create, update, delete lecturers and assign subjects</p>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <!-- Manage Courses Card -->
+      <div class="info-card clickable" (click)="navigateToManageCourses()">
+        <div class="card-icon course-color">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+            <path d="M2 17l10 5 10-5"></path>
+            <path d="M2 12l10 5 10-5"></path>
+          </svg>
+        </div>
+        <h3>📖 Manage Courses</h3>
+        <p>View all subjects with lecturer and student assignments</p>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <!-- System Reports Card (Future) -->
+      <div class="info-card disabled">
+        <div class="card-icon report-color">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+        </div>
+        <h3>📊 System Reports</h3>
         <p>Coming soon...</p>
       </div>
 
-      <div class="info-card">
-        <h3> Manage Lecturers</h3>
-        <p>Coming soon...</p>
-      </div>
-
-      <div class="info-card">
-        <h3> Manage Courses</h3>
-        <p>Coming soon...</p>
-      </div>
-
-      <div class="info-card">
-        <h3> System Reports</h3>
-        <p>Coming soon...</p>
-      </div>
     </div>
   </div>
 </div>

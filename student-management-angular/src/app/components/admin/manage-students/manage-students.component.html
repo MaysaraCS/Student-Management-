@@ -1,0 +1,487 @@
+<!-- 
+  MANAGE STUDENTS COMPONENT TEMPLATE
+  
+  ANGULAR CONCEPTS USED:
+  - Structural Directives (*ngIf, *ngFor)
+  - Event Binding ((click), (submit))
+  - Property Binding ([disabled], [class])
+  - Two-way Binding with Reactive Forms
+-->
+
+<div class="manage-container">
+  <!-- Header with back button -->
+  <div class="page-header">
+    <button class="btn-back" (click)="goBack()">← Back to Dashboard</button>
+    <h1>Manage Students</h1>
+  </div>
+
+  <!-- Success/Error Messages -->
+  <!-- 
+    ANGULAR CONCEPT: *ngIf Directive
+    Conditionally shows elements based on boolean expression
+  -->
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+    <button class="alert-close" (click)="successMessage = ''">&times;</button>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-error">
+    {{ errorMessage }}
+    <button class="alert-close" (click)="errorMessage = ''">&times;</button>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="action-bar">
+    <button class="btn btn-primary" (click)="openCreateForm()">
+      <span class="btn-icon">+</span> Create New Student
+    </button>
+
+    <div class="stats">
+      <!-- 
+        ANGULAR CONCEPT: Interpolation {{ }}
+        Displays dynamic data from component
+      -->
+      <span class="stat-badge">Total Students: {{ students.length }}</span>
+    </div>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Loading...</p>
+  </div>
+
+  <!-- ==================== CREATE STUDENT FORM ==================== -->
+
+  <!-- 
+    ANGULAR CONCEPT: Reactive Forms
+    Form is controlled by TypeScript code (createForm FormGroup)
+  -->
+  <div *ngIf="showCreateForm" class="form-modal">
+    <div class="form-container">
+      <div class="form-header">
+        <h2>Create New Student</h2>
+        <button class="btn-close" (click)="cancelCreate()">&times;</button>
+      </div>
+
+      <form [formGroup]="createForm" (submit)="createStudent()">
+        <div class="form-grid">
+          <!-- Full Name -->
+          <div class="form-group">
+            <label for="create-name">Full Name *</label>
+            <input
+              id="create-name"
+              type="text"
+              formControlName="name"
+              placeholder="Enter full name"
+              class="form-input"
+            />
+            <!-- 
+              ANGULAR CONCEPT: Form Validation
+              Shows error only if field is touched and invalid
+            -->
+            <div
+              class="error-text"
+              *ngIf="
+                createForm.get('name')?.touched &&
+                createForm.get('name')?.errors?.['required']
+              "
+            >
+              Name is required
+            </div>
+            <div
+              class="error-text"
+              *ngIf="
+                createForm.get('name')?.touched &&
+                createForm.get('name')?.errors?.['minlength']
+              "
+            >
+              Name must be at least 3 characters
+            </div>
+          </div>
+
+          <!-- Username -->
+          <div class="form-group">
+            <label for="create-username">Username *</label>
+            <input
+              id="create-username"
+              type="text"
+              formControlName="username"
+              placeholder="Enter username"
+              class="form-input"
+            />
+            <div
+              class="error-text"
+              *ngIf="
+                createForm.get('username')?.touched &&
+                createForm.get('username')?.invalid
+              "
+            >
+              Username is required (min 3 characters)
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="form-group">
+            <label for="create-password">Password *</label>
+            <input
+              id="create-password"
+              type="password"
+              formControlName="password"
+              placeholder="Enter password"
+              class="form-input"
+            />
+            <div
+              class="error-text"
+              *ngIf="
+                createForm.get('password')?.touched &&
+                createForm.get('password')?.invalid
+              "
+            >
+              Password is required (min 4 characters)
+            </div>
+          </div>
+
+          <!-- Student ID -->
+          <div class="form-group">
+            <label for="create-studentID">Student ID *</label>
+            <input
+              id="create-studentID"
+              type="text"
+              formControlName="studentID"
+              placeholder="e.g., STU001"
+              class="form-input"
+            />
+            <div
+              class="error-text"
+              *ngIf="
+                createForm.get('studentID')?.touched &&
+                createForm.get('studentID')?.invalid
+              "
+            >
+              Student ID is required
+            </div>
+          </div>
+
+          <!-- Mobile Number -->
+          <div class="form-group">
+            <label for="create-mobileno">Mobile Number *</label>
+            <input
+              id="create-mobileno"
+              type="text"
+              formControlName="mobileno"
+              placeholder="Enter mobile number"
+              class="form-input"
+            />
+            <div
+              class="error-text"
+              *ngIf="
+                createForm.get('mobileno')?.touched &&
+                createForm.get('mobileno')?.invalid
+              "
+            >
+              Mobile number is required
+            </div>
+          </div>
+
+          <!-- Faculty -->
+          <div class="form-group">
+            <label for="create-faculty">Faculty *</label>
+            <input
+              id="create-faculty"
+              type="text"
+              formControlName="faculty"
+              placeholder="e.g., Engineering"
+              class="form-input"
+            />
+            <div
+              class="error-text"
+              *ngIf="
+                createForm.get('faculty')?.touched &&
+                createForm.get('faculty')?.invalid
+              "
+            >
+              Faculty is required
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="cancelCreate()"
+          >
+            Cancel
+          </button>
+          <!-- 
+            ANGULAR CONCEPT: Property Binding [disabled]
+            Disables button when form is invalid
+          -->
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="createForm.invalid || isLoading"
+          >
+            {{ isLoading ? "Creating..." : "Create Student" }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== EDIT STUDENT FORM ==================== -->
+
+  <div *ngIf="showEditForm" class="form-modal">
+    <div class="form-container">
+      <div class="form-header">
+        <h2>Edit Student: {{ selectedStudent?.name }}</h2>
+        <button class="btn-close" (click)="cancelEdit()">&times;</button>
+      </div>
+
+      <form [formGroup]="editForm" (submit)="updateStudent()">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="edit-name">Full Name *</label>
+            <input
+              id="edit-name"
+              type="text"
+              formControlName="name"
+              class="form-input"
+            />
+            <div
+              class="error-text"
+              *ngIf="
+                editForm.get('name')?.touched && editForm.get('name')?.invalid
+              "
+            >
+              Name is required (min 3 characters)
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="edit-username">Username *</label>
+            <input
+              id="edit-username"
+              type="text"
+              formControlName="username"
+              class="form-input"
+            />
+            <div
+              class="error-text"
+              *ngIf="
+                editForm.get('username')?.touched &&
+                editForm.get('username')?.invalid
+              "
+            >
+              Username is required (min 3 characters)
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="edit-studentID">Student ID *</label>
+            <input
+              id="edit-studentID"
+              type="text"
+              formControlName="studentID"
+              class="form-input"
+            />
+            <div
+              class="error-text"
+              *ngIf="
+                editForm.get('studentID')?.touched &&
+                editForm.get('studentID')?.invalid
+              "
+            >
+              Student ID is required
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="edit-mobileno">Mobile Number *</label>
+            <input
+              id="edit-mobileno"
+              type="text"
+              formControlName="mobileno"
+              class="form-input"
+            />
+            <div
+              class="error-text"
+              *ngIf="
+                editForm.get('mobileno')?.touched &&
+                editForm.get('mobileno')?.invalid
+              "
+            >
+              Mobile number is required
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="edit-faculty">Faculty *</label>
+            <input
+              id="edit-faculty"
+              type="text"
+              formControlName="faculty"
+              class="form-input"
+            />
+            <div
+              class="error-text"
+              *ngIf="
+                editForm.get('faculty')?.touched &&
+                editForm.get('faculty')?.invalid
+              "
+            >
+              Faculty is required
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="cancelEdit()"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="editForm.invalid || isLoading"
+          >
+            {{ isLoading ? "Updating..." : "Update Student" }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== ASSIGN SUBJECTS FORM ==================== -->
+
+  <div *ngIf="showAssignForm" class="form-modal">
+    <div class="form-container">
+      <div class="form-header">
+        <h2>Assign Subjects: {{ selectedStudent?.name }}</h2>
+        <button class="btn-close" (click)="cancelAssign()">&times;</button>
+      </div>
+
+      <div class="assign-content">
+        <p class="info-text">
+          Select up to 5 subjects for this student (Currently selected:
+          {{ selectedSubjectIds.length }}/5)
+        </p>
+
+        <div class="subjects-grid">
+          <!-- 
+            ANGULAR CONCEPT: *ngFor Directive
+            Loops through array and creates elements for each item
+          -->
+          <div
+            *ngFor="let subject of availableSubjects"
+            class="subject-checkbox"
+            [class.selected]="isSubjectSelected(subject.id)"
+            (click)="toggleSubjectSelection(subject.id)"
+          >
+            <input
+              type="checkbox"
+              [checked]="isSubjectSelected(subject.id)"
+              [id]="'subject-' + subject.id"
+            />
+            <label [for]="'subject-' + subject.id">
+              <strong>{{ subject.subjectCode }}</strong>
+              <span>{{ subject.subjectName }}</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="cancelAssign()"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            (click)="assignSubjects()"
+            [disabled]="selectedSubjectIds.length === 0 || isLoading"
+          >
+            {{ isLoading ? "Assigning..." : "Assign Subjects" }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== STUDENTS TABLE ==================== -->
+
+  <div class="table-container" *ngIf="!isLoading">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Student ID</th>
+          <th>Name</th>
+          <th>Username</th>
+          <th>Faculty</th>
+          <th>Subjects</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Show message if no students -->
+        <tr *ngIf="students.length === 0">
+          <td colspan="7" class="no-data">
+            No students found. Click "Create New Student" to add one.
+          </td>
+        </tr>
+
+        <!-- Loop through students -->
+        <tr *ngFor="let student of students">
+          <td>{{ student.id }}</td>
+          <td>
+            <span class="badge badge-blue">{{ student.studentId }}</span>
+          </td>
+          <td>
+            <strong>{{ student.name }}</strong>
+          </td>
+          <td>{{ student.username }}</td>
+          <td>{{ student.faculty }}</td>
+          <td>
+            <span class="subject-count"
+              >{{ getSubjectCount(student) }} subjects</span
+            >
+            <div class="subject-list">{{ getSubjectNames(student) }}</div>
+          </td>
+          <td>
+            <div class="action-buttons">
+              <button
+                class="btn-action btn-edit"
+                (click)="openEditForm(student)"
+                title="Edit student"
+              >
+                Edit
+              </button>
+              <button
+                class="btn-action btn-assign"
+                (click)="openAssignForm(student)"
+                title="Assign subjects"
+              >
+                Assign
+              </button>
+              <button
+                class="btn-action btn-delete"
+                (click)="deleteStudent(student)"
+                title="Delete student"
+              >
+                Delete
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
