@@ -1,0 +1,104 @@
+<div class="students-container">
+  <!-- Header -->
+  <div class="page-header">
+    <button class="btn-back" (click)="goBack()">← Back to Dashboard</button>
+    <h1>My Students</h1>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="alert alert-error">
+    {{ errorMessage }}
+    <button class="alert-close" (click)="errorMessage = ''">&times;</button>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Loading your students...</p>
+  </div>
+
+  <!-- Content -->
+  <div *ngIf="!isLoading" class="content">
+    <!-- Welcome Card -->
+    <div class="welcome-card lecturer-gradient">
+      <h2>{{ lecturerName }}</h2>
+      <p><strong>Total Students:</strong> {{ students.length }}</p>
+      <p class="info-note">Showing students enrolled in your subjects</p>
+    </div>
+
+    <!-- No Students Message -->
+    <div *ngIf="students.length === 0" class="no-students-card">
+      <div class="empty-icon">👨‍🎓</div>
+      <h3>No Students Yet</h3>
+      <p>No students are currently enrolled in your subjects.</p>
+      <p>
+        Students will appear here once they are assigned to subjects you teach.
+      </p>
+    </div>
+
+    <!-- Students Table -->
+    <div *ngIf="students.length > 0" class="table-container">
+      <div class="table-header">
+        <h3>Students in Your Classes</h3>
+        <div class="student-count-badge">{{ students.length }} Students</div>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Student ID</th>
+            <th>Name</th>
+            <th>Faculty</th>
+            <th>Common Subjects</th>
+            <th>Username</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let student of students">
+            <td>
+              <span class="student-id-badge">{{ student.studentId }}</span>
+            </td>
+            <td>
+              <strong>{{ student.name }}</strong>
+            </td>
+            <td>
+              <span class="faculty-text">{{ student.faculty }}</span>
+            </td>
+            <td>
+              <div class="subjects-cell">
+                <span
+                  class="subject-count-badge"
+                  [ngClass]="getSubjectBadgeClass(student)"
+                >
+                  {{ getSubjectCount(student) }} subject(s)
+                </span>
+                <div class="subject-names">{{ getSubjectNames(student) }}</div>
+              </div>
+            </td>
+            <td>
+              <span class="username-text">{{ student.username }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Info Panel -->
+    <div class="info-panel" *ngIf="students.length > 0">
+      <h3>ℹ️ About Your Students</h3>
+      <p>
+        <strong>Common Subjects:</strong> Shows only the subjects that both you
+        and the student are assigned to.
+      </p>
+      <p>
+        <strong>Example:</strong> If you teach Algorithm and Database, and a
+        student is enrolled in Algorithm, Math, and Database - only Algorithm
+        and Database will be shown.
+      </p>
+      <p>
+        <strong>Student Count:</strong> Total number of unique students enrolled
+        in any of your subjects.
+      </p>
+    </div>
+  </div>
+</div>

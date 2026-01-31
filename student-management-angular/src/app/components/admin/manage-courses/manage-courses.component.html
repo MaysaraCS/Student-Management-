@@ -4,21 +4,127 @@
     <h1>Manage Courses</h1>
   </div>
 
-  <div *ngIf="errorMessage" class="alert alert-error">
-    {{ errorMessage }}
+  <!-- Success/Error Messages -->
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+    <button class="alert-close" (click)="successMessage = ''">&times;</button>
   </div>
 
-  <div class="stats-bar">
-    <div class="stat-card">
-      <div class="stat-number">{{ subjects.length }}</div>
-      <div class="stat-label">Total Courses</div>
+  <div *ngIf="errorMessage" class="alert alert-error">
+    {{ errorMessage }}
+    <button class="alert-close" (click)="errorMessage = ''">&times;</button>
+  </div>
+
+  <!-- Action Bar with Create Button -->
+  <div class="action-bar">
+    <button class="btn btn-primary" (click)="openCreateForm()">
+      <span class="btn-icon">+</span> Create New Course
+    </button>
+
+    <div class="stats">
+      <span class="stat-badge">Total Courses: {{ subjects.length }}</span>
     </div>
   </div>
 
+  <!-- Loading Spinner -->
   <div *ngIf="isLoading" class="loading-container">
     <div class="spinner"></div>
     <p>Loading courses...</p>
   </div>
+
+  <!-- ==================== CREATE COURSE FORM ==================== -->
+
+  <div *ngIf="showCreateForm" class="form-modal">
+    <div class="form-container">
+      <div class="form-header">
+        <h2>Create New Course</h2>
+        <button class="btn-close" (click)="cancelCreate()">&times;</button>
+      </div>
+
+      <form [formGroup]="createForm" (submit)="createCourse()">
+        <div class="form-grid">
+          <!-- Subject Name -->
+          <div class="form-group">
+            <label for="create-subjectName">Course Name *</label>
+            <input
+              id="create-subjectName"
+              type="text"
+              formControlName="subjectName"
+              placeholder="e.g., Data Structures and Algorithms"
+              class="form-input"
+            />
+            <div
+              class="error-text"
+              *ngIf="
+                createForm.get('subjectName')?.touched &&
+                createForm.get('subjectName')?.errors?.['required']
+              "
+            >
+              Course name is required
+            </div>
+            <div
+              class="error-text"
+              *ngIf="
+                createForm.get('subjectName')?.touched &&
+                createForm.get('subjectName')?.errors?.['maxlength']
+              "
+            >
+              Course name must not exceed 100 characters
+            </div>
+          </div>
+
+          <!-- Subject Code -->
+          <div class="form-group">
+            <label for="create-subjectCode">Course Code *</label>
+            <input
+              id="create-subjectCode"
+              type="text"
+              formControlName="subjectCode"
+              placeholder="e.g., CS201"
+              class="form-input"
+            />
+            <div
+              class="error-text"
+              *ngIf="
+                createForm.get('subjectCode')?.touched &&
+                createForm.get('subjectCode')?.errors?.['required']
+              "
+            >
+              Course code is required
+            </div>
+            <div
+              class="error-text"
+              *ngIf="
+                createForm.get('subjectCode')?.touched &&
+                createForm.get('subjectCode')?.errors?.['maxlength']
+              "
+            >
+              Course code must not exceed 20 characters
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="cancelCreate()"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="createForm.invalid || isLoading"
+          >
+            {{ isLoading ? "Creating..." : "Create Course" }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== COURSES TABLE ==================== -->
 
   <div class="table-container" *ngIf="!isLoading">
     <table class="data-table">
@@ -33,7 +139,9 @@
       </thead>
       <tbody>
         <tr *ngIf="subjects.length === 0">
-          <td colspan="5" class="no-data">No courses found</td>
+          <td colspan="5" class="no-data">
+            No courses found. Click "Create New Course" to add one.
+          </td>
         </tr>
 
         <!-- 

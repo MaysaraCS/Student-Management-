@@ -3,7 +3,7 @@ import { StudentDashboardComponent } from './components/student-dashboard/studen
 import { ErrorComponent } from './components/error/error.component';
 import { RouteGuardService } from './service/guards/route-guard.service';
 import { LayoutComponent } from './components/layout/layout.component';
-import { LecturerDashboardComponent } from './components/lecturer-dashboard/lecturer-dashboard.component';
+import { LecturerDashboardComponent } from './components/lecturer/lecturer-dashboard/lecturer-dashboard.component';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { Role } from './models/roles.enum';
 import { LandingComponent } from './components/landing/landing.component';
@@ -14,6 +14,8 @@ import { AdminLoginComponent } from './components/admin-login/admin-login.compon
 import { ManageStudentsComponent } from './components/admin/manage-students/manage-students.component';
 import { ManageLecturersComponent } from './components/admin/manage-lecturers/manage-lecturers.component';
 import { ManageCoursesComponent } from './components/admin/manage-courses/manage-courses.component';
+import { MyClassesComponent } from './components/lecturer/my-classes/my-classes.component';
+import { MyStudentsComponent } from './components/lecturer/my-students/my-students.component';
 
 export const routes: Routes = [
     {
@@ -45,18 +47,35 @@ export const routes: Routes = [
         path: '', 
         component: LayoutComponent,
         children: [
+            // Student Routes
             { 
                 path: 'student-dashboard/:username', 
                 component: StudentDashboardComponent, 
                 canActivate: [RouteGuardService],
                 data: { roles: [Role.STUDENT] }
             },
+            
+            // Lecturer Routes
             {
                 path: 'lecturer-dashboard/:username', 
                 component: LecturerDashboardComponent, 
                 canActivate: [RouteGuardService],
                 data: { roles: [Role.LECTURER] }
             },
+            {
+                path: 'lecturer/my-classes',
+                component: MyClassesComponent,
+                canActivate: [RouteGuardService],
+                data: { roles: [Role.LECTURER] }
+            },
+            {
+                path: 'lecturer/my-students',
+                component: MyStudentsComponent,
+                canActivate: [RouteGuardService],
+                data: { roles: [Role.LECTURER] }
+            },
+            
+            // Admin Routes
             {
                 path: 'admin-dashboard/:username', 
                 component: AdminDashboardComponent, 

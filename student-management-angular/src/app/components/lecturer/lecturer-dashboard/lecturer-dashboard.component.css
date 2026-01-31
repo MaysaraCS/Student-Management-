@@ -1,0 +1,203 @@
+:host {
+    display: block;
+    min-height: 100vh;
+    background: #f5f7fb;
+}
+
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.dashboard-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    margin: 0;
+}
+
+.btn-logout {
+    padding: 10px 24px;
+    background-color: #e53935;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-logout:hover {
+    background-color: #c62828;
+}
+
+.dashboard-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.welcome-card {
+    color: white;
+    padding: 32px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.lecturer-gradient {
+    background: linear-gradient(135deg, #6b2e2e 0%, #6f0a17 100%);
+}
+
+.welcome-card h2 {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+}
+
+.welcome-card p {
+    font-size: 18px;
+    margin: 0;
+    opacity: 0.95;
+}
+
+/* Navigation grid for dashboard cards */
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.info-card {
+    background: white;
+    padding: 28px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Clickable cards with pointer cursor */
+.info-card.clickable {
+    cursor: pointer;
+}
+
+.info-card.clickable:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Disabled cards (coming soon) */
+.info-card.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.info-card.disabled:hover {
+    transform: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Card icons with colored backgrounds */
+.card-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    transition: transform 0.3s ease;
+}
+
+.info-card.clickable:hover .card-icon {
+    transform: scale(1.1);
+}
+
+.classes-color {
+    background: linear-gradient(135deg, #6b2e2e 0%, #6f0a17 100%);
+    color: white;
+}
+
+.students-color {
+    background: linear-gradient(135deg, #a40f22 0%, #6f0a17 100%);
+    color: white;
+}
+
+.assignments-color {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    color: white;
+}
+
+.grades-color {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+}
+
+.schedule-color {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+}
+
+.info-card h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 12px 0;
+}
+
+.info-card p {
+    font-size: 14px;
+    color: #666;
+    margin: 0;
+}
+
+/* Arrow indicator for clickable cards */
+.card-arrow {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: 24px;
+    color: #a40f22;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.info-card.clickable:hover .card-arrow {
+    opacity: 1;
+    right: 16px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .dashboard-header {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .welcome-card h2 {
+        font-size: 24px;
+    }
+
+    .welcome-card p {
+        font-size: 16px;
+    }
+}

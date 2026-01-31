@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthStorageService } from '../../service/storage/auth-storage.service';
 import { CommonModule } from '@angular/common';
+import { AuthStorageService } from '../../../service/storage/auth-storage.service';
 
 @Component({
   selector: 'app-lecturer-dashboard',
@@ -25,6 +25,25 @@ export class LecturerDashboardComponent implements OnInit {
     console.log('Lecturer Dashboard loaded for:', this.username);
   }
 
+  /**
+   * Navigate to My Classes page
+   * Shows subjects assigned to this lecturer
+   */
+  navigateToMyClasses(): void {
+    this.router.navigate(['/lecturer/my-classes']);
+  }
+
+  /**
+   * Navigate to My Students page
+   * Shows students enrolled in lecturer's subjects
+   */
+  navigateToMyStudents(): void {
+    this.router.navigate(['/lecturer/my-students']);
+  }
+
+  /**
+   * Logout and return to landing page
+   */
   logout(): void {
     this.storage.logoutStorage();
     this.router.navigate(['/landing']);

@@ -1,0 +1,92 @@
+<div class="classes-container">
+  <!-- Header -->
+  <div class="page-header">
+    <button class="btn-back" (click)="goBack()">← Back to Dashboard</button>
+    <h1>My Classes</h1>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="alert alert-error">
+    {{ errorMessage }}
+    <button class="alert-close" (click)="errorMessage = ''">&times;</button>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Loading your classes...</p>
+  </div>
+
+  <!-- Content -->
+  <div *ngIf="!isLoading" class="content">
+    <!-- Welcome Card -->
+    <div class="welcome-card lecturer-gradient">
+      <h2>{{ lecturerName }}</h2>
+      <p><strong>Department:</strong> {{ department }}</p>
+      <p><strong>Assigned Subjects:</strong> {{ subjects.length }} / 3</p>
+    </div>
+
+    <!-- No Classes Message -->
+    <div *ngIf="subjects.length === 0" class="no-classes-card">
+      <div class="empty-icon">📚</div>
+      <h3>No Classes Assigned Yet</h3>
+      <p>You haven't been assigned to any subjects yet.</p>
+      <p>Please contact the administrator to get assigned to classes.</p>
+    </div>
+
+    <!-- Classes Grid -->
+    <div *ngIf="subjects.length > 0" class="classes-grid">
+      <div *ngFor="let subject of subjects" class="class-card">
+        <div class="class-header">
+          <div class="class-code-badge">{{ subject.subjectCode }}</div>
+          <div class="class-status" [ngClass]="getStatusClass(subject)">
+            {{ getStatusText(subject) }}
+          </div>
+        </div>
+
+        <div class="class-body">
+          <h3>{{ subject.subjectName }}</h3>
+
+          <div class="class-stats">
+            <div class="stat-item">
+              <div class="stat-icon">👨‍🎓</div>
+              <div class="stat-info">
+                <div class="stat-value">{{ subject.studentCount }}</div>
+                <div class="stat-label">Students</div>
+              </div>
+            </div>
+
+            <div class="stat-item">
+              <div class="stat-icon">👨‍🏫</div>
+              <div class="stat-info">
+                <div class="stat-value">{{ subject.lecturerCount }}</div>
+                <div class="stat-label">Lecturers</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="class-footer">
+          <span class="class-id">Class ID: {{ subject.id }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Info Panel -->
+    <div class="info-panel" *ngIf="subjects.length > 0">
+      <h3>ℹ️ About Your Classes</h3>
+      <p>
+        <strong>Maximum Subjects:</strong> As a lecturer, you can be assigned to
+        a maximum of 3 subjects.
+      </p>
+      <p>
+        <strong>Student Count:</strong> Shows the number of students enrolled in
+        each subject.
+      </p>
+      <p>
+        <strong>Lecturer Count:</strong> Shows the total number of lecturers
+        teaching this subject.
+      </p>
+    </div>
+  </div>
+</div>

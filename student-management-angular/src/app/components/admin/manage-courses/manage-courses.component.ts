@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject } from '../../../models/subject.model';
 import { SubjectService } from '../../../service/subject.service';
 
 /**
- * MANAGE COURSES COMPONENT
+ * MANAGE COURSES COMPONENT WITH CREATE FUNCTIONALITY
  * 
  * DISPLAY LOGIC EXPLANATION:
  * 
@@ -19,16 +20,11 @@ import { SubjectService } from '../../../service/subject.service';
  *    - When we fetch subjects, JPA loads these relationships
  *    - The service counts the size of these sets
  *    - Returns the count in the DTO
- * 
- * 3. To get lecturer names:
- *    - We could enhance the backend to return lecturer names
- *    - Or we could fetch all lecturers and match by subject
- *    - For now, we show counts (simpler and faster)
  */
 @Component({
   selector: 'app-manage-courses',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './manage-courses.component.html',
   styleUrl: './manage-courses.component.css'
 })
@@ -37,11 +33,25 @@ export class ManageCoursesComponent implements OnInit {
   subjects: Subject[] = [];
   isLoading: boolean = false;
   errorMessage: string = '';
+  successMessage: string = '';
+  
+  // UI State
+  showCreateForm: boolean = false;
+  
+  // Reactive Form for creating course
+  createForm: FormGroup;
 
   constructor(
     private subjectService: SubjectService,
+    private formBuilder: FormBuilder,
     private router: Router
-  ) {}
+  ) {
+    // Initialize create form with validation
+    this.createForm = this.formBuilder.group({
+      subjectName: ['', [Validators.required, Validators.maxLength(100)]],
+      subjectCode: ['', [Validators.required, Validators.maxLength(20)]]
+    });
+  }
 
   ngOnInit(): void {
     this.loadSubjects();
@@ -71,6 +81,72 @@ export class ManageCoursesComponent implements OnInit {
     });
   }
 
+  // ==================== CREATE COURSE OPERATIONS ====================
+
+  /**
+   * Open create course form
+   */
+  openCreateForm(): void {
+    this.showCreateForm = true;
+    this.createForm.reset();
+    this.clearMessages();
+  }
+
+  /**
+   * Create new course/subject
+   * POST /api/subjects
+   */
+  createCourse(): void {
+    if (this.createForm.invalid) {
+      this.errorMessage = 'Please fill all required fields correctly';
+      return;
+    }
+
+    this.isLoading = true;
+    const formValue = this.createForm.value;
+
+    const request = {
+      subjectName: formValue.subjectName,
+      subjectCode: formValue.subjectCode
+    };
+
+    this.subjectService.createSubject(request).subscribe({
+      next: (response) => {
+        this.successMessage = `Course "${response.subjectName}" created successfully!`;
+        this.showCreateForm = false;
+        this.createForm.reset();
+        this.loadSubjects(); // Reload list to show new course
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.errorMessage = err.error?.message || err.error || 'Failed to create course';
+        this.isLoading = false;
+      }
+    });
+  }
+
+  /**
+   * Cancel create operation
+   */
+  cancelCreate(): void {
+    this.showCreateForm = false;
+    this.createForm.reset();
+    this.clearMessages();
+  }
+
+  // ==================== HELPER METHODS ====================
+
+  /**
+   * Clear all messages
+   */
+  clearMessages(): void {
+    this.errorMessage = '';
+    this.successMessage = '';
+  }
+
+  /**
+   * Navigate back to admin dashboard
+   */
   goBack(): void {
     this.router.navigate(['/admin-dashboard', 'admin']);
   }
