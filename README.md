@@ -1,92 +1,99 @@
-Student Management System
+# Student Management System
+
 A full-stack web application for managing students, lecturers, and course assignments built with Angular 19 and Spring Boot 4.
-Technologies Used
-Frontend:
 
-Angular 19
-TypeScript
-Bootstrap 5
-RxJS
+## Technologies Used
 
-Backend:
+**Frontend:**
+- Angular 19
+- TypeScript
+- Bootstrap 5
+- RxJS
 
-Spring Boot 4.0.2
-Spring Security with JWT
-PostgreSQL
-JPA/Hibernate
+**Backend:**
+- Spring Boot 4.0.2
+- Spring Security with JWT
+- PostgreSQL
+- JPA/Hibernate
 
-Features
-Admin Dashboard
+## Features
 
-Create, update, and delete students
-Create, update, and delete lecturers
-Manage courses/subjects
-Assign subjects to students (max 5 per student)
-Assign subjects to lecturers (max 3 per lecturer)
+### Admin Dashboard
+- Create, update, and delete students
+- Create, update, and delete lecturers
+- Manage courses/subjects
+- Assign subjects to students (max 5 per student)
+- Assign subjects to lecturers (max 3 per lecturer)
 
-Lecturer Dashboard
+### Lecturer Dashboard
+- View assigned subjects
+- View enrolled students
+- Track student enrollment per subject
 
-View assigned subjects
-View enrolled students
-Track student enrollment per subject
+### Student Dashboard
+- View enrolled courses
+- View assigned lecturers
+- Track course information
 
-Student Dashboard
+## Database Schema
 
-View enrolled courses
-View assigned lecturers
-Track course information
-
-Database Schema
 The system uses 7 tables:
+- `users` - Base table for all users
+- `students` - Student-specific information
+- `lecturers` - Lecturer-specific information
+- `admins` - Admin-specific information
+- `subjects` - Course information
+- `student_subjects` - Many-to-many relationship
+- `lecturer_subjects` - Many-to-many relationship
 
-users - Base table for all users
-students - Student-specific information
-lecturers - Lecturer-specific information
-admins - Admin-specific information
-subjects - Course information
-student_subjects - Many-to-many relationship
-lecturer_subjects - Many-to-many relationship
+## Authentication
 
-Authentication
-
-Admin: OAuth-based login (email: maysaracs1001@gmail.com)
-Lecturer: Username/password authentication
-Student: Registration and login with username/password
+- **Admin:** OAuth-based login (email: maysaracs1001@gmail.com)
+- **Lecturer:** Username/password authentication
+- **Student:** Registration and login with username/password
 
 All endpoints are secured with JWT tokens and role-based access control.
-Installation
-Prerequisites
 
-Node.js (v18+)
-Java 21
-PostgreSQL
-Maven
+## Installation
 
-Backend Setup
+### Prerequisites
+- Node.js (v18+)
+- Java 21
+- PostgreSQL
+- Maven
 
-Create PostgreSQL database:
+### Backend Setup
+
+1. Create PostgreSQL database:
+```sql
 CREATE DATABASE student_management;
+```
 
-Update application.properties:
+2. Update `application.properties` in `backend/src/main/resources/`:
+```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/student-management
 spring.datasource.username=your_username
 spring.datasource.password=your_password
+```
 
-Run Spring Boot application:
-cd student-management-spring-boot
+3. Run Spring Boot application:
+```bash
+cd backend
 mvn spring-boot:run
+```
 
+Backend runs on `http://localhost:8080`
 
-Backend runs on http://localhost:8080
-Frontend Setup
+### Frontend Setup
 
-Install dependencies:
-
-bashcd student-management-angular
+1. Install dependencies:
+```bash
+cd frontend
 npm install
+```
 
-Run Angular application:
-
+2. Run Angular application:
+```bash
 ng serve
 ```
 
@@ -142,13 +149,13 @@ Frontend runs on `http://localhost:4200`
 ### Student Dashboard
 ![Student Dashboard](screenshots/student-dashboard.png)
 
-### lecturer subject
-![lecturer subject](screenshots/lecturer-subject.png)
+### Lecturer Subject
+![Lecturer Subject](screenshots/lecturer-subject.png)
 
 ## Project Structure
 ```
 student-management-system/
-├── student-management-angular/
+├── frontend/
 │   ├── src/
 │   │   ├── app/
 │   │   │   ├── components/
@@ -157,17 +164,26 @@ student-management-system/
 │   │   │   └── app.routes.ts
 │   │   └── styles.css
 │   └── package.json
-└── student-management-spring-boot/
-    ├── src/
-    │   ├── main/
-    │   │   ├── java/com/studentManagement/
-    │   │   │   ├── controller/
-    │   │   │   ├── service/
-    │   │   │   ├── entity/
-    │   │   │   ├── repository/
-    │   │   │   └── dto/
-    │   │   └── resources/
-    │   │       └── application.properties
-    └── pom.xml
+├── backend/
+│   ├── src/
+│   │   ├── main/
+│   │   │   ├── java/com/studentManagement/
+│   │   │   │   ├── controller/
+│   │   │   │   ├── service/
+│   │   │   │   ├── entity/
+│   │   │   │   ├── repository/
+│   │   │   │   └── dto/
+│   │   │   └── resources/
+│   │   │       └── application.properties
+│   └── pom.xml
+└── screenshots/
+```
 
+## Default Admin Credentials
 
+- Email: `maysaracs1001@gmail.com`
+- Authentication: OAuth (simplified)
+
+## License
+
+This project is open source and available under the MIT License.
