@@ -1,0 +1,75 @@
+<div class="courses-container">
+  <div class="page-header">
+    <button class="btn-back" (click)="goBack()">← Back to Dashboard</button>
+    <h1>My Courses</h1>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-error">
+    {{ errorMessage }}
+    <button class="alert-close" (click)="errorMessage = ''">&times;</button>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Loading your courses...</p>
+  </div>
+
+  <div *ngIf="!isLoading" class="content">
+    <div class="welcome-card student-gradient">
+      <h2>{{ studentName }}</h2>
+      <p><strong>Student ID:</strong> {{ studentId }}</p>
+      <p><strong>Faculty:</strong> {{ faculty }}</p>
+      <p><strong>Enrolled Subjects:</strong> {{ subjects.length }} / 5</p>
+    </div>
+
+    <div *ngIf="subjects.length === 0" class="no-courses-card">
+      <div class="empty-icon">📚</div>
+      <h3>No Courses Enrolled Yet</h3>
+      <p>You haven't been enrolled in any subjects yet.</p>
+      <p>Please contact the administrator to get assigned to courses.</p>
+    </div>
+
+    <div *ngIf="subjects.length > 0" class="courses-grid">
+      <div *ngFor="let subject of subjects" class="course-card">
+        <div class="course-header">
+          <div class="course-code-badge">{{ subject.subjectCode }}</div>
+        </div>
+
+        <div class="course-body">
+          <h3>{{ subject.subjectName }}</h3>
+
+          <div class="course-info">
+            <div class="info-item">
+              <span class="info-icon">👨‍🏫</span>
+              <div class="info-details">
+                <div class="info-value">{{ getLecturerCount(subject) }}</div>
+                <div class="info-label">Lecturer(s)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lecturer-list">
+            <strong>Taught by:</strong>
+            <p>{{ getLecturerNames(subject) }}</p>
+          </div>
+        </div>
+
+        <div class="course-footer">
+          <span class="course-id">Subject ID: {{ subject.id }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-panel" *ngIf="subjects.length > 0">
+      <h3>ℹ️ About Your Courses</h3>
+      <p>
+        <strong>Maximum Subjects:</strong> As a student, you can enroll in a
+        maximum of 5 subjects.
+      </p>
+      <p>
+        <strong>Lecturer Information:</strong> Shows all lecturers teaching each
+        subject.
+      </p>
+    </div>
+  </div>
+</div>

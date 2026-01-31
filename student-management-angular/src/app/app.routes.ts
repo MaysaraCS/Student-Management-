@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { StudentDashboardComponent } from './components/student-dashboard/student-dashboard.component';
+import { StudentDashboardComponent } from './components/student/student-dashboard/student-dashboard.component';
 import { ErrorComponent } from './components/error/error.component';
 import { RouteGuardService } from './service/guards/route-guard.service';
 import { LayoutComponent } from './components/layout/layout.component';
@@ -16,6 +16,8 @@ import { ManageLecturersComponent } from './components/admin/manage-lecturers/ma
 import { ManageCoursesComponent } from './components/admin/manage-courses/manage-courses.component';
 import { MyClassesComponent } from './components/lecturer/my-classes/my-classes.component';
 import { MyStudentsComponent } from './components/lecturer/my-students/my-students.component';
+import { MyCoursesComponent } from './components/student/my-courses/my-courses.component';
+import { MyLecturersComponent } from './components/student/my-lecturers/my-lecturers.component';
 
 export const routes: Routes = [
     {
@@ -51,6 +53,19 @@ export const routes: Routes = [
             { 
                 path: 'student-dashboard/:username', 
                 component: StudentDashboardComponent, 
+                canActivate: [RouteGuardService],
+                data: { roles: [Role.STUDENT] }
+            },
+            // Student feature routes
+            {
+                path: 'student/my-courses',
+                component: MyCoursesComponent,
+                canActivate: [RouteGuardService],
+                data: { roles: [Role.STUDENT] }
+            },
+            {
+                path: 'student/my-lecturers',
+                component: MyLecturersComponent,
                 canActivate: [RouteGuardService],
                 data: { roles: [Role.STUDENT] }
             },

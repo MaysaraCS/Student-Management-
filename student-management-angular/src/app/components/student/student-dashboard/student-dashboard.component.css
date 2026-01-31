@@ -51,11 +51,14 @@
 }
 
 .welcome-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     padding: 32px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.student-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 .welcome-card h2 {
@@ -72,21 +75,72 @@
 
 .info-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
 }
 
 .info-card {
     background: white;
-    padding: 24px;
+    padding: 28px;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-.info-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+.info-card.clickable {
+    cursor: pointer;
+}
+
+.info-card.clickable:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.info-card.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.info-card.disabled:hover {
+    transform: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.card-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    transition: transform 0.3s ease;
+}
+
+.info-card.clickable:hover .card-icon {
+    transform: scale(1.1);
+}
+
+.courses-color {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.lecturers-color {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+}
+
+.grades-color {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+    color: white;
+}
+
+.schedule-color {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
 }
 
 .info-card h3 {
@@ -102,6 +156,21 @@
     margin: 0;
 }
 
+.card-arrow {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: 24px;
+    color: #667eea;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.info-card.clickable:hover .card-arrow {
+    opacity: 1;
+    right: 16px;
+}
+
 @media (max-width: 768px) {
     .dashboard-header {
         flex-direction: column;
@@ -111,5 +180,13 @@
 
     .info-grid {
         grid-template-columns: 1fr;
+    }
+
+    .welcome-card h2 {
+        font-size: 24px;
+    }
+
+    .welcome-card p {
+        font-size: 16px;
     }
 }

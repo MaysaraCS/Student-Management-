@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthStorageService } from '../../service/storage/auth-storage.service';
 import { CommonModule } from '@angular/common';
+import { AuthStorageService } from '../../../service/storage/auth-storage.service';
 
 @Component({
   selector: 'app-student-dashboard',
@@ -23,6 +23,20 @@ export class StudentDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.username = this.route.snapshot.params['username'];
     console.log('Student Dashboard loaded for:', this.username);
+  }
+
+  /**
+   * Navigate to My Courses page
+   */
+  navigateToMyCourses(): void {
+    this.router.navigate(['/student/my-courses']);
+  }
+
+  /**
+   * Navigate to My Lecturers page
+   */
+  navigateToMyLecturers(): void {
+    this.router.navigate(['/student/my-lecturers']);
   }
 
   logout(): void {

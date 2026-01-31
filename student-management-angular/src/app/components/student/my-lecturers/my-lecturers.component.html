@@ -1,0 +1,95 @@
+<div class="lecturers-container">
+  <div class="page-header">
+    <button class="btn-back" (click)="goBack()">← Back to Dashboard</button>
+    <h1>My Lecturers</h1>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-error">
+    {{ errorMessage }}
+    <button class="alert-close" (click)="errorMessage = ''">&times;</button>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Loading your lecturers...</p>
+  </div>
+
+  <div *ngIf="!isLoading" class="content">
+    <div class="welcome-card student-gradient">
+      <h2>{{ studentName }}</h2>
+      <p><strong>Total Lecturers:</strong> {{ lecturers.length }}</p>
+      <p class="info-note">Showing lecturers teaching your enrolled subjects</p>
+    </div>
+
+    <div *ngIf="lecturers.length === 0" class="no-lecturers-card">
+      <div class="empty-icon">👨‍🏫</div>
+      <h3>No Lecturers Yet</h3>
+      <p>No lecturers are currently assigned to your subjects.</p>
+      <p>
+        Lecturers will appear here once they are assigned to subjects you're
+        enrolled in.
+      </p>
+    </div>
+
+    <div *ngIf="lecturers.length > 0" class="table-container">
+      <div class="table-header">
+        <h3>Lecturers Teaching Your Subjects</h3>
+        <div class="lecturer-count-badge">
+          {{ lecturers.length }} Lecturer(s)
+        </div>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Lecturer ID</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Common Subjects</th>
+            <th>Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let lecturer of lecturers">
+            <td>
+              <span class="lecturer-id-badge">{{ lecturer.lecturerId }}</span>
+            </td>
+            <td>
+              <strong>{{ lecturer.name }}</strong>
+            </td>
+            <td>
+              <span class="department-text">{{ lecturer.department }}</span>
+            </td>
+            <td>
+              <div class="subjects-cell">
+                <span
+                  class="subject-count-badge"
+                  [ngClass]="getSubjectBadgeClass(lecturer)"
+                >
+                  {{ getSubjectCount(lecturer) }} subject(s)
+                </span>
+                <div class="subject-names">{{ getSubjectNames(lecturer) }}</div>
+              </div>
+            </td>
+            <td>
+              <span class="email-text">{{ lecturer.email }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="info-panel" *ngIf="lecturers.length > 0">
+      <h3>ℹ️ About Your Lecturers</h3>
+      <p>
+        <strong>Common Subjects:</strong> Shows only the subjects that both you
+        and the lecturer are assigned to.
+      </p>
+      <p>
+        <strong>Example:</strong> If a lecturer teaches Algorithm, Database, and
+        Math, but you're only enrolled in Algorithm and Database - only those
+        two will be shown.
+      </p>
+    </div>
+  </div>
+</div>

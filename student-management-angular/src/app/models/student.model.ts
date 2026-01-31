@@ -41,3 +41,36 @@ export interface StudentUpdateRequest {
   mobileno: string;
   faculty: string;
 }
+
+export interface SubjectDetail {
+  id: number;
+  subjectName: string;
+  subjectCode: string;
+  lecturers: Array<{
+    name: string;
+    department: string;
+    email: string;
+  }>;
+}
+
+export interface MyCoursesResponse {
+  studentName: string;
+  studentId: string;
+  faculty: string;
+  subjectCount: number;
+  subjects: SubjectDetail[];
+}
+
+export interface LecturerDetail {
+  name: string;
+  lecturerId: string;
+  department: string;
+  email: string;
+  subjects: string[];
+}
+
+export interface MyLecturersResponse {
+  studentName: string;
+  lecturerCount: number;
+  lecturers: LecturerDetail[];
+}

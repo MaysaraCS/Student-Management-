@@ -10,7 +10,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Api_URL } from '../app.constants';
-import { Student, StudentCreateRequest, StudentUpdateRequest } from '../models/student.model';
+import { MyCoursesResponse, MyLecturersResponse, Student, StudentCreateRequest, StudentUpdateRequest } from '../models/student.model';
 
 /**
  * ANGULAR CONCEPT: @Injectable decorator
@@ -110,5 +110,20 @@ export class StudentService {
     return this.http.delete<any>(
       `${Api_URL}/admin/assign/student/${studentId}/subject/${subjectId}`
     );
+  }
+
+  /**
+   * Get student's enrolled subjects
+   * GET /api/student/my-subjects
+   */
+  getMyCourses(): Observable<MyCoursesResponse> {
+    return this.http.get<MyCoursesResponse>(`${Api_URL}/student/my-subjects`);
+  }
+  /**
+   * Get lecturers teaching student's subjects
+   * GET /api/student/my-lecturers
+   */
+  getMyLecturers(): Observable<MyLecturersResponse> {
+    return this.http.get<MyLecturersResponse>(`${Api_URL}/student/my-lecturers`);
   }
 }

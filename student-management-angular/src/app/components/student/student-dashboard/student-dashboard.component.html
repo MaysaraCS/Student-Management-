@@ -1,0 +1,102 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Student Dashboard</h1>
+    <button class="btn-logout" (click)="logout()">Logout</button>
+  </div>
+
+  <div class="dashboard-content">
+    <div class="welcome-card student-gradient">
+      <h2>Welcome, {{ username }}!</h2>
+      <p>You are logged in as a <strong>Student</strong></p>
+    </div>
+
+    <div class="info-grid">
+      <!-- My Courses - CLICKABLE -->
+      <div class="info-card clickable" (click)="navigateToMyCourses()">
+        <div class="card-icon courses-color">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
+        </div>
+        <h3>📚 My Courses</h3>
+        <p>View your enrolled subjects</p>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <!-- My Lecturers - CLICKABLE -->
+      <div class="info-card clickable" (click)="navigateToMyLecturers()">
+        <div class="card-icon lecturers-color">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+        </div>
+        <h3>👨‍🏫 My Lecturers</h3>
+        <p>View lecturers teaching your subjects</p>
+        <div class="card-arrow">→</div>
+      </div>
+
+      <!-- Grades - Coming Soon -->
+      <div class="info-card disabled">
+        <div class="card-icon grades-color">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+            <path d="M2 17l10 5 10-5"></path>
+            <path d="M2 12l10 5 10-5"></path>
+          </svg>
+        </div>
+        <h3>📊 Grades</h3>
+        <p>Coming soon...</p>
+      </div>
+
+      <!-- Schedule - Coming Soon -->
+      <div class="info-card disabled">
+        <div class="card-icon schedule-color">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+        </div>
+        <h3>📅 Schedule</h3>
+        <p>Coming soon...</p>
+      </div>
+    </div>
+  </div>
+</div>
